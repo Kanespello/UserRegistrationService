@@ -1,1 +1,9 @@
+/home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Services/RegistrationService.java
+/home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Dto/Request/EmailVerificationRequest.java
+/home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Dto/Response/EmailVerificationResponse.java
+/home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Controllers/RegistrationVoneController.java
+/home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Dto/Response/LoginResponse.java
+/home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Dto/Request/RegistrationRequest.java
 /home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/UserRegistrationServiceApplication.java
+/home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Dto/Request/LoginRequest.java
+/home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Dto/Response/RegistrationResponse.java
