@@ -2,7 +2,7 @@ package com.espello.services.UserRegistrationService.Dto.Request;
 
 import jakarta.validation.constraints.NotNull;
 
-public class EmailVerificationRequest {
+public class OTPVerificationRequest {
 
 	@NotNull
 	private Integer userId;

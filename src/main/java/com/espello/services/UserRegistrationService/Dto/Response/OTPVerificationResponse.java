@@ -2,7 +2,7 @@ package com.espello.services.UserRegistrationService.Dto.Response;
 
 import com.espello.services.EspelloUtils.ResponseDto.Error;
 
-public class EmailVerificationResponse extends Error {
+public class OTPVerificationResponse extends Error {
 
 	private boolean verified;
 	private int attemptLeft = 0 ;

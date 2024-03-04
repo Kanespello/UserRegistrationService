@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.espello.services.EspelloUtils.ResponseDto.Response;
-import com.espello.services.UserRegistrationService.Dto.Request.EmailVerificationRequest;
 import com.espello.services.UserRegistrationService.Dto.Request.LoginRequest;
+import com.espello.services.UserRegistrationService.Dto.Request.OTPVerificationRequest;
 import com.espello.services.UserRegistrationService.Dto.Request.RegistrationRequest;
-import com.espello.services.UserRegistrationService.Dto.Response.EmailVerificationResponse;
 import com.espello.services.UserRegistrationService.Dto.Response.LoginResponse;
+import com.espello.services.UserRegistrationService.Dto.Response.OTPVerificationResponse;
 import com.espello.services.UserRegistrationService.Dto.Response.RegistrationResponse;
 import com.espello.services.UserRegistrationService.Services.RegistrationService;
 
@@ -44,18 +44,18 @@ public class RegistrationVoneController {
 		return response;
 	}
 	
-	@RequestMapping(value = "/verifyEmail", method = RequestMethod.POST)
-	 public Response<EmailVerificationResponse> verifyEmail(@Validated @RequestBody EmailVerificationRequest emailVerificationRequest){
+	@RequestMapping(value = "/verifyOTP", method = RequestMethod.POST)
+	 public Response<OTPVerificationResponse> verifyOTP(@Validated @RequestBody OTPVerificationRequest otpVerificationRequest){
 		
-		logger.info("emailVerificationRequest::::::::::::{}",emailVerificationRequest);
+		logger.info("otpVerificationRequest::::::::::::{}",otpVerificationRequest);
 		
-		Response<EmailVerificationResponse> response = new Response<>();
+		Response<OTPVerificationResponse> response = new Response<>();
 		
-		EmailVerificationResponse emailVerificationResponse = registrationService.verifyEmail(emailVerificationRequest);
+		OTPVerificationResponse otpVerificationResponse = registrationService.verifyOTP(otpVerificationRequest);
 		
-		response.setData(emailVerificationResponse);
+		response.setData(otpVerificationResponse);
 		
-		logger.info("EmailVerificationResponse::::::::::::{}",emailVerificationResponse);
+		logger.info("otpVerificationResponse::::::::::::{}",otpVerificationResponse);
 		return response;
 	}
 	
