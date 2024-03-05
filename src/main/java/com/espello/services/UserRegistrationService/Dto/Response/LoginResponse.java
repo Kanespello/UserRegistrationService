@@ -4,13 +4,13 @@ import com.espello.services.EspelloUtils.ResponseDto.Error;
 
 public class LoginResponse extends Error{
 	
-	private Boolean loginSuccess;
+	private boolean loginSuccess;
 
-	public Boolean getLoginSuccess() {
+	public boolean isLoginSuccess() {
 		return loginSuccess;
 	}
 
-	public void setLoginSuccess(Boolean loginSuccess) {
+	public void setLoginSuccess(boolean loginSuccess) {
 		this.loginSuccess = loginSuccess;
 	}
 

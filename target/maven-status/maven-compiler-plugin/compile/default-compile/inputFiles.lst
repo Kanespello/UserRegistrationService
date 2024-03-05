@@ -1,5 +1,6 @@
 /home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Repository/OTPVerificationRepository.java
 /home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Services/RegistrationService.java
+/home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Services/RegistrationHelper.java
 /home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Dto/Response/OTPVerificationResponse.java
 /home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Enums/OTPStatus.java
 /home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Domain/User.java
@@ -11,6 +12,7 @@
 /home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Enums/VerificationModule.java
 /home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Controllers/RegistrationVoneController.java
 /home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Enums/VerificationModuleConvertor.java
+/home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Configs/RegistrationConfig.java
 /home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Enums/OTPStatusConvertor.java
 /home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/UserRegistrationServiceApplication.java
 /home/vikasa/case/services/UserRegistrationService/src/main/java/com/espello/services/UserRegistrationService/Dto/Request/LoginRequest.java

@@ -44,6 +44,20 @@ public class RegistrationVoneController {
 		return response;
 	}
 	
+	
+	@RequestMapping(value = "/resendOTP", method = RequestMethod.POST)
+	 public Response<Boolean> resendOTP(@Validated @RequestBody OTPVerificationRequest otpVerificationRequest){
+		
+		logger.info("resendOTPRequest::::::::::::{}",otpVerificationRequest);
+		
+		Response<Boolean> response = new Response<>();
+		
+		response.setData(registrationService.resendOTP(otpVerificationRequest));
+		
+		return response;
+	}
+	
+	
 	@RequestMapping(value = "/verifyOTP", method = RequestMethod.POST)
 	 public Response<OTPVerificationResponse> verifyOTP(@Validated @RequestBody OTPVerificationRequest otpVerificationRequest){
 		
@@ -67,11 +81,23 @@ public class RegistrationVoneController {
 		
 		Response<LoginResponse> response = new Response<>();
 		
-		LoginResponse loginResponse = new LoginResponse();
+		LoginResponse loginResponse = registrationService.login(loginRequest);
 		
 		response.setData(loginResponse);
 		
 		logger.info("LoginResponse::::::::::::{}",loginResponse);
+		return response;
+	}
+	
+	@RequestMapping(value = "/setPassword", method = RequestMethod.POST)
+	 public Response<Boolean> setPassword(@Validated @RequestBody LoginRequest loginRequest){
+		
+		logger.info("setPasswordRequest::::::::::::{}",loginRequest);
+		
+		Response<Boolean> response = new Response<>();
+		
+		response.setData(registrationService.setPassword(loginRequest));
+		
 		return response;
 	}
 }

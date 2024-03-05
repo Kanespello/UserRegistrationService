@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum OTPStatus {
 	VERIFIED("verified"),
-    UnVERIFIED("unverified");
+    UNVERIFIED("unverified");
 
     private String value;
 

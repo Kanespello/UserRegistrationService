@@ -19,7 +19,7 @@ import jakarta.persistence.Table;
 public class OTPVerification {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "verificationCode")
@@ -28,19 +28,22 @@ public class OTPVerification {
     @Column(name = "userId")
     private Integer userId;
     
+    @Column(name = "retryCount")
+    private Integer retryCount=0;
+    
     @Column(name = "status")
-    private OTPStatus otpStatus;
+    private OTPStatus otpStatus = OTPStatus.UNVERIFIED;
     
     @Column(name = "module")
     private VerificationModule verificationModule;
     
-    @Column(name = "verified_on")
+    @Column(name = "verifiedOn")
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone="IST")
-    private LocalDateTime verified_on;
+    private LocalDateTime verifiedOn;
     
-    @Column(name = "added_on")
+    @Column(name = "addedOn")
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone="IST")
-    private LocalDateTime added_on;
+    private LocalDateTime addedOn=LocalDateTime.now();
 
 	public Integer getId() {
 		return id;
@@ -66,6 +69,14 @@ public class OTPVerification {
 		this.userId = userId;
 	}
 
+	public Integer getRetryCount() {
+		return retryCount;
+	}
+
+	public void setRetryCount(Integer retryCount) {
+		this.retryCount = retryCount;
+	}
+
 	public OTPStatus getOtpStatus() {
 		return otpStatus;
 	}
@@ -82,27 +93,27 @@ public class OTPVerification {
 		this.verificationModule = verificationModule;
 	}
 
-	public LocalDateTime getVerified_on() {
-		return verified_on;
+	public LocalDateTime getVerifiedOn() {
+		return verifiedOn;
 	}
 
-	public void setVerified_on(LocalDateTime verified_on) {
-		this.verified_on = verified_on;
+	public void setVerifiedOn(LocalDateTime verifiedOn) {
+		this.verifiedOn = verifiedOn;
 	}
 
-	public LocalDateTime getAdded_on() {
-		return added_on;
+	public LocalDateTime getAddedOn() {
+		return addedOn;
 	}
 
-	public void setAdded_on(LocalDateTime added_on) {
-		this.added_on = added_on;
+	public void setAddedOn(LocalDateTime addedOn) {
+		this.addedOn = addedOn;
 	}
 
 	@Override
 	public String toString() {
 		return "OTPVerification [id=" + id + ", verificationCode=" + verificationCode + ", userId=" + userId
-				+ ", otpStatus=" + otpStatus + ", verificationModule=" + verificationModule + ", verified_on="
-				+ verified_on + ", added_on=" + added_on + "]";
+				+ ", retryCount=" + retryCount + ", otpStatus=" + otpStatus + ", verificationModule="
+				+ verificationModule + ", verifiedOn=" + verifiedOn + ", addedOn=" + addedOn + "]";
 	}
-  
+
 }
