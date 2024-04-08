@@ -24,6 +24,15 @@ public class SessionDetails {
     @Column(name = "role")
     private String role;
     
+    @Column(name = "mode")
+    private String mode;
+    
+    @Column(name = "industry")
+    private String industry;
+    
+    @Column(name = "companyType")
+    private String companyType;
+    
     @Column(name = "sessionStartTime")
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone="IST")
     private LocalDateTime sessionStartTime = LocalDateTime.now();
@@ -56,6 +65,30 @@ public class SessionDetails {
 		this.role = role;
 	}
 
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+
+	public String getIndustry() {
+		return industry;
+	}
+
+	public void setIndustry(String industry) {
+		this.industry = industry;
+	}
+
+	public String getCompanyType() {
+		return companyType;
+	}
+
+	public void setCompanyType(String companyType) {
+		this.companyType = companyType;
+	}
+
 	public LocalDateTime getSessionStartTime() {
 		return sessionStartTime;
 	}
@@ -74,9 +107,9 @@ public class SessionDetails {
 
 	@Override
 	public String toString() {
-		return "SessionDetails [id=" + id + ", sessionId=" + sessionId + ", role=" + role + ", sessionStartTime="
-				+ sessionStartTime + ", sessionEndTime=" + sessionEndTime + "]";
+		return "SessionDetails [id=" + id + ", sessionId=" + sessionId + ", role=" + role + ", mode=" + mode
+				+ ", industry=" + industry + ", companyType=" + companyType + ", sessionStartTime=" + sessionStartTime
+				+ ", sessionEndTime=" + sessionEndTime + "]";
 	}
-    
 }
    

@@ -8,4 +8,5 @@ import com.espello.services.UserRegistrationService.Domain.SessionAnalysis;
 @Repository
 public interface SessionAnalysisRepository extends JpaRepository<SessionAnalysis, Integer> {
 
+	SessionAnalysis findSessionAnalysisBySessionId(String sessionId);
 }

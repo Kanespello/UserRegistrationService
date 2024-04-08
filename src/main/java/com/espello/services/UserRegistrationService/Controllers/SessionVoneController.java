@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.espello.services.EspelloUtils.ResponseDto.Response;
-import com.espello.services.UserRegistrationService.Domain.SessionTranscript;
 import com.espello.services.UserRegistrationService.Dto.SessionAnalysisDTO;
 import com.espello.services.UserRegistrationService.Dto.Request.ConversationRequest;
 import com.espello.services.UserRegistrationService.Dto.Request.SessionCreateRequest;
 import com.espello.services.UserRegistrationService.Dto.Response.SessionCreateResponse;
 import com.espello.services.UserRegistrationService.Dto.Response.SessionDetailsResponse;
+import com.espello.services.UserRegistrationService.Dto.Response.SessionTranscriptResponse;
 import com.espello.services.UserRegistrationService.Services.SessionService;
 
 import jakarta.validation.constraints.NotNull;
@@ -59,20 +59,18 @@ public class SessionVoneController {
 		return response;
 	}
 	
-	@RequestMapping(value = "/saveConversion", method = RequestMethod.POST)
-	public Response<Boolean> saveConversion(@Validated @RequestBody ConversationRequest conversationRequest){
+	@RequestMapping(value = "/saveConversation", method = RequestMethod.POST)
+	public Response<Boolean> saveConversation(@Validated @RequestBody ConversationRequest conversationRequest){
 		Response<Boolean> response = new Response<>();
 		
-		response.setData(sessionService.saveConversion(conversationRequest));
+		response.setData(sessionService.saveConversation(conversationRequest));
 		
 		return response;		
 	}
 	
 	@RequestMapping(value = "/getTranscript", method = RequestMethod.GET)
-	public Response<SessionTranscript> getTranscript(@NotNull String sessionId){
-		Response<SessionTranscript> response = new Response<>();
-		
-		logger.info("sessionId::::::::::::{}",sessionId);
+	public Response<SessionTranscriptResponse> getTranscript(@NotNull String sessionId){
+		Response<SessionTranscriptResponse> response = new Response<>();
 		
 		response.setData(sessionService.getTranscript(sessionId));
 		

@@ -8,4 +8,6 @@ import com.espello.services.UserRegistrationService.Domain.SessionDetails;
 @Repository
 public interface SessionDetailsRepository extends JpaRepository<SessionDetails, Integer> {
 
+	SessionDetails findSessionDetailsBySessionId(String sessionId);
+	
 }

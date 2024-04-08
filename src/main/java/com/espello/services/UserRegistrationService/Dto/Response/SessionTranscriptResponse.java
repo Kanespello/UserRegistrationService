@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.espello.services.UserRegistrationService.Dto.Request.ConversationTuple;
 
-public class SessionTranscript {
+public class SessionTranscriptResponse {
 
 	private List<ConversationTuple> conversationTuples;
 

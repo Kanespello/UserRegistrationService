@@ -2,13 +2,14 @@ package com.espello.services.UserRegistrationService.Dto.Response;
 
 import java.time.LocalDateTime;
 
+import com.espello.services.UserRegistrationService.Dto.SessionDetailsDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class SessionDetailsResponse {
 
     private String sessionId;
     
-    private String role;
+    private SessionDetailsDTO sessionDetails;
     
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone="IST")
     private LocalDateTime sessionStartTime;
@@ -24,12 +25,12 @@ public class SessionDetailsResponse {
 		this.sessionId = sessionId;
 	}
 
-	public String getRole() {
-		return role;
+	public SessionDetailsDTO getSessionDetails() {
+		return sessionDetails;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setSessionDetails(SessionDetailsDTO sessionDetails) {
+		this.sessionDetails = sessionDetails;
 	}
 
 	public LocalDateTime getSessionStartTime() {
@@ -50,8 +51,7 @@ public class SessionDetailsResponse {
 
 	@Override
 	public String toString() {
-		return "SessionDetailsResponse [sessionId=" + sessionId + ", role=" + role + ", sessionStartTime="
-				+ sessionStartTime + ", sessionEndTime=" + sessionEndTime + "]";
+		return "SessionDetailsResponse [sessionId=" + sessionId + ", sessionDetails=" + sessionDetails
+				+ ", sessionStartTime=" + sessionStartTime + ", sessionEndTime=" + sessionEndTime + "]";
 	}
-
 }
