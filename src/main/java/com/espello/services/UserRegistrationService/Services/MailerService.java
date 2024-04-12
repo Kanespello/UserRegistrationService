@@ -41,7 +41,6 @@ public class MailerService {
 	            .uri(URI.create(apiUrl))
 	            .header("Accept", "application/json")
 	            .header("Content-Type", "application/json")
-	            .header("api-key", "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")
 	            .POST(BodyPublishers.ofString(jsonPayload))
 	            .build();
 
