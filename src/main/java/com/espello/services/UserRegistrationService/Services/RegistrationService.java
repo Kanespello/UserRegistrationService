@@ -16,6 +16,7 @@ import com.espello.services.UserRegistrationService.Dto.Response.LoginResponse;
 import com.espello.services.UserRegistrationService.Dto.Response.OTPVerificationResponse;
 import com.espello.services.UserRegistrationService.Dto.Response.RegistrationResponse;
 import com.espello.services.UserRegistrationService.Enums.OTPStatus;
+import com.espello.services.UserRegistrationService.Enums.RegistrationMedium;
 import com.espello.services.UserRegistrationService.Enums.VerificationModule;
 import com.espello.services.UserRegistrationService.Repository.OTPVerificationRepository;
 import com.espello.services.UserRegistrationService.Repository.UserRepository;
@@ -55,9 +56,25 @@ public class RegistrationService {
 		
 		User userResponse = userRepository.findUserByEmail(registrationRequest.getEmail());
 		
-		if(userResponse!=null && userResponse.getUserId()>0) {
-			registrationResponse.setErrorDescription("Email already exists");
-			return registrationResponse;
+		if(registrationRequest.getRegistrationMedium().equals(RegistrationMedium.GSIGNUP)) {
+			if(userResponse!=null && userResponse.getUserId()>0) {
+				registrationResponse.setUserId(userResponse.getUserId());
+				return registrationResponse;
+			}
+		}
+		else if(registrationRequest.getRegistrationMedium().equals(RegistrationMedium.EMAIl)) {
+			
+			if(userResponse!=null && userResponse.getUserId()>0) {
+				registrationResponse.setErrorDescription("Email already exists");
+				return registrationResponse;
+			}
+			
+			String otp = registrationHelper.generateOTP(userResponse.getUserId(), VerificationModule.EMAIL);
+			
+			//mail to be triggered for otp verification
+			
+			logger.info("userResponse::::::::::::::{}",userResponse);
+			
 		}
 		
 		User userRequest = new User();
@@ -67,12 +84,6 @@ public class RegistrationService {
 		userRequest.setFullName(registrationRequest.getName());
 		
 		userResponse = userRepository.save(userRequest);
-		
-		String otp = registrationHelper.generateOTP(userResponse.getUserId(), VerificationModule.EMAIL);
-		
-		//mail to be triggered for otp verification
-		
-		logger.info("userResponse::::::::::::::{}",userResponse);
 		
 		registrationResponse.setUserId(userResponse.getUserId());
 		

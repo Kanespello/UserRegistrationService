@@ -1,13 +1,17 @@
 package com.espello.services.UserRegistrationService.Dto.Request;
 
+import com.espello.services.UserRegistrationService.Enums.RegistrationMedium;
+
 import jakarta.validation.constraints.NotNull;
 
 public class RegistrationRequest {
 
 	@NotNull
-	public String name;
+	private String name;
 	@NotNull
-	public String email;
+	private String email;
+	@NotNull
+	private RegistrationMedium registrationMedium;
 	
 	public String getName() {
 		return name;
@@ -21,9 +25,15 @@ public class RegistrationRequest {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public RegistrationMedium getRegistrationMedium() {
+		return registrationMedium;
+	}
+	public void setRegistrationMedium(RegistrationMedium registrationMedium) {
+		this.registrationMedium = registrationMedium;
+	}
 	@Override
 	public String toString() {
-		return "RegistrationRequest [name=" + name + ", email=" + email + "]";
+		return "RegistrationRequest [name=" + name + ", email=" + email + ", registrationMedium=" + registrationMedium
+				+ "]";
 	}
-
 }
