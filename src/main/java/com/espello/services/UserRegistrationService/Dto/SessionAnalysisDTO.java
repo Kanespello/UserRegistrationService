@@ -1,5 +1,7 @@
 package com.espello.services.UserRegistrationService.Dto;
 
+import java.util.List;
+
 import jakarta.validation.constraints.NotNull;
 
 public class SessionAnalysisDTO {
@@ -7,38 +9,24 @@ public class SessionAnalysisDTO {
 	@NotNull
     private String sessionId;
     
-    private String anlysisParam1;
-    
-    private String anlysisParam2;
+	@NotNull
+	private List<AnalysisParam> analysisParams;
 
 	public String getSessionId() {
 		return sessionId;
 	}
-
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
 	}
-
-	public String getAnlysisParam1() {
-		return anlysisParam1;
+	public List<AnalysisParam> getAnalysisParams() {
+		return analysisParams;
 	}
-
-	public void setAnlysisParam1(String anlysisParam1) {
-		this.anlysisParam1 = anlysisParam1;
-	}
-
-	public String getAnlysisParam2() {
-		return anlysisParam2;
-	}
-
-	public void setAnlysisParam2(String anlysisParam2) {
-		this.anlysisParam2 = anlysisParam2;
+	public void setAnalysisParams(List<AnalysisParam> analysisParams) {
+		this.analysisParams = analysisParams;
 	}
 
 	@Override
 	public String toString() {
-		return "SessionAnalysisDTO [sessionId=" + sessionId + ", anlysisParam1=" + anlysisParam1 + ", anlysisParam2="
-				+ anlysisParam2 + "]";
+		return "SessionAnalysisDTO [sessionId=" + sessionId + ", analysisParams=" + analysisParams + "]";
 	}
-	
 }

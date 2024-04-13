@@ -1,6 +1,8 @@
 package com.espello.services.UserRegistrationService.Services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -9,10 +11,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.espello.services.UserRegistrationService.Domain.AnalysisSubParam;
 import com.espello.services.UserRegistrationService.Domain.SessionAnalysis;
 import com.espello.services.UserRegistrationService.Domain.SessionDetails;
 import com.espello.services.UserRegistrationService.Domain.SessionTranscript;
 import com.espello.services.UserRegistrationService.Domain.Projections.UserSessionProjection;
+import com.espello.services.UserRegistrationService.Dto.AnalysisDetailTuple;
+import com.espello.services.UserRegistrationService.Dto.AnalysisParam;
 import com.espello.services.UserRegistrationService.Dto.SessionAnalysisDTO;
 import com.espello.services.UserRegistrationService.Dto.Request.ConversationRequest;
 import com.espello.services.UserRegistrationService.Dto.Request.SessionCreateRequest;
@@ -20,6 +25,7 @@ import com.espello.services.UserRegistrationService.Dto.Response.SessionCreateRe
 import com.espello.services.UserRegistrationService.Dto.Response.SessionDetailsResponse;
 import com.espello.services.UserRegistrationService.Dto.Response.SessionTranscriptResponse;
 import com.espello.services.UserRegistrationService.Enums.SessionStatus;
+import com.espello.services.UserRegistrationService.Repository.AnalysisSubParamRepository;
 import com.espello.services.UserRegistrationService.Repository.SessionAnalysisRepository;
 import com.espello.services.UserRegistrationService.Repository.SessionDetailsRepository;
 import com.espello.services.UserRegistrationService.Repository.SessionTranscriptRepository;
@@ -45,6 +51,9 @@ public class SessionService {
 	
 	@Autowired
 	private SessionAnalysisRepository sessionAnalysisRepository;
+	
+	@Autowired
+	private AnalysisSubParamRepository analysisSubParamRepository;
 	
 	@Transactional
 	public SessionCreateResponse createSession(SessionCreateRequest sessionCreateRequest){
@@ -135,11 +144,24 @@ public class SessionService {
 		return sessionTranscriptResponse;
 	}
 	
+	@Transactional
 	public Boolean saveAnalysis(SessionAnalysisDTO sessionAnalysisDTO){
 		Boolean response = false;
 		try {
-			SessionAnalysis sessionAnalysis = DTOBuilder.buildDto(sessionAnalysisDTO);
-			sessionAnalysisRepository.save(sessionAnalysis);
+			
+			for (AnalysisParam analysisParam  : sessionAnalysisDTO.getAnalysisParams()) {
+				
+				SessionAnalysis sessionAnalysis = DTOBuilder.buildDto(sessionAnalysisDTO.getSessionId(), analysisParam.getAnalysisDetailTuple());
+				
+				SessionAnalysis savedAnalysis = sessionAnalysisRepository.save(sessionAnalysis);
+				
+				if(CollectionUtils.isNotEmpty(analysisParam.getSubParamsAnalysisDetailTuple())) {
+					
+					List<AnalysisSubParam> analysisSubParams = DTOBuilder.buildDto(savedAnalysis.getId(), analysisParam.getSubParamsAnalysisDetailTuple());
+					analysisSubParamRepository.saveAll(analysisSubParams);
+				}
+				
+			}
 			response = true;
 		} catch (Exception e) {
 			logger.error("Error Saving Analysis", e);
@@ -152,8 +174,17 @@ public class SessionService {
 		SessionAnalysisDTO sessionAnalysisDTO = null;
 		
 		try {
-			SessionAnalysis sessionAnalysis = sessionAnalysisRepository.findSessionAnalysisBySessionId(sessionId);
-			sessionAnalysisDTO = DTOBuilder.buildDto(sessionAnalysis);
+			List<SessionAnalysis> sessionAnalysises = sessionAnalysisRepository.findAllSessionAnalysisBySessionId(sessionId);
+			
+			if(CollectionUtils.isNotEmpty(sessionAnalysises)) {
+				
+				List<Integer> analysisIds = sessionAnalysises.stream().map(SessionAnalysis::getId).collect(Collectors.toList());
+				
+				List<AnalysisSubParam> analysisSubParams = analysisSubParamRepository.findAllAnalysisSubParamByAnalysisParamIdIn(analysisIds);
+				
+				sessionAnalysisDTO = DTOBuilder.buildDto(sessionAnalysises, analysisSubParams);
+				
+			}
 			
 		} catch (Exception e) {
 			logger.error("Error getting Analysis", e);

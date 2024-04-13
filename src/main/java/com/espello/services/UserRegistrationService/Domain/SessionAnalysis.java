@@ -22,11 +22,14 @@ public class SessionAnalysis {
     @Column(name = "sessionId")
     private String sessionId;
     
-    @Column(name = "anlysisParam1")
-    private String anlysisParam1;
+    @Column(name = "anlysisParam")
+    private String anlysisParam;
     
-    @Column(name = "anlysisParam2")
-    private String anlysisParam2;
+    @Column(name = "anlysisParamDesc")
+    private String anlysisParamDesc;
+    
+    @Column(name = "anlysisParamScore")
+    private Integer anlysisParamScore;
     
     @Column(name = "dateTime")
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone="IST")
@@ -48,20 +51,28 @@ public class SessionAnalysis {
 		this.sessionId = sessionId;
 	}
 
-	public String getAnlysisParam1() {
-		return anlysisParam1;
+	public String getAnlysisParam() {
+		return anlysisParam;
 	}
 
-	public void setAnlysisParam1(String anlysisParam1) {
-		this.anlysisParam1 = anlysisParam1;
+	public void setAnlysisParam(String anlysisParam) {
+		this.anlysisParam = anlysisParam;
 	}
 
-	public String getAnlysisParam2() {
-		return anlysisParam2;
+	public String getAnlysisParamDesc() {
+		return anlysisParamDesc;
 	}
 
-	public void setAnlysisParam2(String anlysisParam2) {
-		this.anlysisParam2 = anlysisParam2;
+	public void setAnlysisParamDesc(String anlysisParamDesc) {
+		this.anlysisParamDesc = anlysisParamDesc;
+	}
+
+	public Integer getAnlysisParamScore() {
+		return anlysisParamScore;
+	}
+
+	public void setAnlysisParamScore(Integer anlysisParamScore) {
+		this.anlysisParamScore = anlysisParamScore;
 	}
 
 	public LocalDateTime getDateTime() {
@@ -74,7 +85,8 @@ public class SessionAnalysis {
 
 	@Override
 	public String toString() {
-		return "SessionAnalysis [id=" + id + ", sessionId=" + sessionId + ", anlysisParam1=" + anlysisParam1
-				+ ", anlysisParam2=" + anlysisParam2 + ", dateTime=" + dateTime + "]";
+		return "SessionAnalysis [id=" + id + ", sessionId=" + sessionId + ", anlysisParam=" + anlysisParam
+				+ ", anlysisParamDesc=" + anlysisParamDesc + ", anlysisParamScore=" + anlysisParamScore + ", dateTime="
+				+ dateTime + "]";
 	}
 }

@@ -4,14 +4,18 @@ import java.security.SecureRandom;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
 
 import com.espello.services.UserRegistrationService.Configs.RegistrationConfig;
+import com.espello.services.UserRegistrationService.Domain.AnalysisSubParam;
 import com.espello.services.UserRegistrationService.Domain.SessionAnalysis;
 import com.espello.services.UserRegistrationService.Domain.SessionDetails;
 import com.espello.services.UserRegistrationService.Domain.SessionTranscript;
 import com.espello.services.UserRegistrationService.Domain.UserSessionDetails;
+import com.espello.services.UserRegistrationService.Dto.AnalysisDetailTuple;
+import com.espello.services.UserRegistrationService.Dto.AnalysisParam;
 import com.espello.services.UserRegistrationService.Dto.SessionAnalysisDTO;
 import com.espello.services.UserRegistrationService.Dto.SessionDetailsDTO;
 import com.espello.services.UserRegistrationService.Dto.Request.ConversationRequest;
@@ -89,29 +93,69 @@ public class DTOBuilder {
 		return sessionTranscript;
 	}
 	
-	public static SessionAnalysis buildDto(SessionAnalysisDTO sessionAnalysisDTO) {
+	public static SessionAnalysis buildDto(String sessionId, AnalysisDetailTuple analysisDetailTuple) {
 		
 		SessionAnalysis sessionAnalysis = new SessionAnalysis();
 		
-		sessionAnalysis.setSessionId(sessionAnalysisDTO.getSessionId());
-		sessionAnalysis.setAnlysisParam1(sessionAnalysisDTO.getAnlysisParam1());
-		sessionAnalysis.setAnlysisParam2(sessionAnalysisDTO.getAnlysisParam2());
+		sessionAnalysis.setSessionId(sessionId);
+		sessionAnalysis.setAnlysisParam(analysisDetailTuple.getAnalysisParam());
+		sessionAnalysis.setAnlysisParamDesc(analysisDetailTuple.getAnalysisParamDesc());
+		sessionAnalysis.setAnlysisParamScore(analysisDetailTuple.getAnalysisParamScore());
 		
 		return sessionAnalysis;
 	}
 	
-	public static SessionAnalysisDTO buildDto(SessionAnalysis sessionAnalysis) {
+	public static List<AnalysisSubParam> buildDto(Integer analysisParamId, List<AnalysisDetailTuple> subParamAnalysisDetailTuples) {
 		
-		if(sessionAnalysis==null) {
+		List<AnalysisSubParam> analysisSubParams = new ArrayList<>();
+		
+		for (AnalysisDetailTuple analysisDetailTuple : subParamAnalysisDetailTuples) {
+			AnalysisSubParam analysisSubParam = new AnalysisSubParam();
+			analysisSubParam.setAnalysisParamId(analysisParamId);
+			analysisSubParam.setAnlysisSubParam(analysisDetailTuple.getAnalysisParam());
+			analysisSubParam.setAnlysisSubParamDesc(analysisDetailTuple.getAnalysisParamDesc());
+			analysisSubParams.add(analysisSubParam);
+		}
+		
+		return analysisSubParams;
+	}
+	
+	public static SessionAnalysisDTO buildDto(List<SessionAnalysis> sessionAnalysises, List<AnalysisSubParam> analysisSubParams) {
+		
+		if(sessionAnalysises==null || analysisSubParams==null) {
 			return null;
 		}
 		
 		SessionAnalysisDTO sessionAnalysisDTO = new SessionAnalysisDTO();
+		List<AnalysisParam> analysisParams = new ArrayList<>();
 		
-		sessionAnalysisDTO.setSessionId(sessionAnalysis.getSessionId());
-		sessionAnalysisDTO.setAnlysisParam1(sessionAnalysis.getAnlysisParam1());
-		sessionAnalysisDTO.setAnlysisParam2(sessionAnalysis.getAnlysisParam2());
+		for (SessionAnalysis sessionAnalysis : sessionAnalysises) {
+			AnalysisParam analysisParam = new AnalysisParam();
+			AnalysisDetailTuple analysisDetailTuple = new AnalysisDetailTuple();
+			List<AnalysisDetailTuple> subParamsAnalysisDetailTuple = new ArrayList<>();
+			
+			analysisDetailTuple.setAnalysisParam(sessionAnalysis.getAnlysisParam());
+			analysisDetailTuple.setAnalysisParamDesc(sessionAnalysis.getAnlysisParamDesc());
+			analysisDetailTuple.setAnalysisParamScore(sessionAnalysis.getAnlysisParamScore());
+			
+			List<AnalysisSubParam> filteredSubParams = analysisSubParams.stream()
+				    .filter(subParam -> subParam.getAnalysisParamId() == sessionAnalysis.getId())  // Only include items where id matches
+				    .collect(Collectors.toList());  // Collect the results into a new list
+			
+			if(CollectionUtils.isNotEmpty(filteredSubParams)) {
+				for (AnalysisSubParam analysisSubParam : filteredSubParams) {
+					AnalysisDetailTuple analysisSubParamDetailTuple = new AnalysisDetailTuple();
+					analysisSubParamDetailTuple.setAnalysisParam(analysisSubParam.getAnlysisSubParam());
+					analysisSubParamDetailTuple.setAnalysisParamDesc(analysisSubParam.getAnlysisSubParamDesc());
+					subParamsAnalysisDetailTuple.add(analysisSubParamDetailTuple);
+				}
+			}
+			analysisParam.setAnalysisDetailTuple(analysisDetailTuple);
+			analysisParam.setSubParamsAnalysisDetailTuple(subParamsAnalysisDetailTuple);
+			analysisParams.add(analysisParam);
+		}
 		
+		sessionAnalysisDTO.setAnalysisParams(analysisParams);
 		return sessionAnalysisDTO;
 	}
 	
