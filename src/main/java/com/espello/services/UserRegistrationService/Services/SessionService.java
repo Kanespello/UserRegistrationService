@@ -1,6 +1,5 @@
 package com.espello.services.UserRegistrationService.Services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +15,6 @@ import com.espello.services.UserRegistrationService.Domain.SessionAnalysis;
 import com.espello.services.UserRegistrationService.Domain.SessionDetails;
 import com.espello.services.UserRegistrationService.Domain.SessionTranscript;
 import com.espello.services.UserRegistrationService.Domain.Projections.UserSessionProjection;
-import com.espello.services.UserRegistrationService.Dto.AnalysisDetailTuple;
 import com.espello.services.UserRegistrationService.Dto.AnalysisParam;
 import com.espello.services.UserRegistrationService.Dto.SessionAnalysisDTO;
 import com.espello.services.UserRegistrationService.Dto.Request.ConversationRequest;

@@ -23,6 +23,9 @@ public class AnalysisSubParam {
     
     @Column(name = "anlysisSubParamDesc")
     private String anlysisSubParamDesc;
+    
+    @Column(name = "anlysisSubParamScore")
+    private Integer anlysisSubParamScore;
 
 	public int getId() {
 		return id;
@@ -56,9 +59,18 @@ public class AnalysisSubParam {
 		this.anlysisSubParamDesc = anlysisSubParamDesc;
 	}
 
+	public Integer getAnlysisSubParamScore() {
+		return anlysisSubParamScore;
+	}
+
+	public void setAnlysisSubParamScore(Integer anlysisSubParamScore) {
+		this.anlysisSubParamScore = anlysisSubParamScore;
+	}
+
 	@Override
 	public String toString() {
 		return "AnalysisSubParam [id=" + id + ", analysisParamId=" + analysisParamId + ", anlysisSubParam="
-				+ anlysisSubParam + ", anlysisSubParamDesc=" + anlysisSubParamDesc + "]";
+				+ anlysisSubParam + ", anlysisSubParamDesc=" + anlysisSubParamDesc + ", anlysisSubParamScore="
+				+ anlysisSubParamScore + "]";
 	}
 }

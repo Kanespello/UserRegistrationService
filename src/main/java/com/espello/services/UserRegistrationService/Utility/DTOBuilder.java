@@ -114,6 +114,7 @@ public class DTOBuilder {
 			analysisSubParam.setAnalysisParamId(analysisParamId);
 			analysisSubParam.setAnlysisSubParam(analysisDetailTuple.getAnalysisParam());
 			analysisSubParam.setAnlysisSubParamDesc(analysisDetailTuple.getAnalysisParamDesc());
+			analysisSubParam.setAnlysisSubParamScore(analysisDetailTuple.getAnalysisParamScore());
 			analysisSubParams.add(analysisSubParam);
 		}
 		
@@ -147,6 +148,7 @@ public class DTOBuilder {
 					AnalysisDetailTuple analysisSubParamDetailTuple = new AnalysisDetailTuple();
 					analysisSubParamDetailTuple.setAnalysisParam(analysisSubParam.getAnlysisSubParam());
 					analysisSubParamDetailTuple.setAnalysisParamDesc(analysisSubParam.getAnlysisSubParamDesc());
+					analysisSubParamDetailTuple.setAnalysisParamScore(analysisSubParam.getAnlysisSubParamScore());
 					subParamsAnalysisDetailTuple.add(analysisSubParamDetailTuple);
 				}
 			}
