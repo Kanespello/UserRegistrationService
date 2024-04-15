@@ -18,16 +18,13 @@ public class UserRegistrationServiceApplication {
 	
     @Bean
     public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true); // Optional: only if you need credentials
-        config.addAllowedOrigin("*");
-//        config.addAllowedOrigin("http://192.168.1.3:3001");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-//        config.addAllowedMethod("POST");
-//        config.addAllowedMethod("PUT");
-//        config.addAllowedMethod("DELETE");
+        config.setAllowCredentials(false); // Not allowing credentials
+        config.addAllowedOrigin("*"); // Allow all origins
+        config.addAllowedHeader("*"); // Allow all headers
+        config.addAllowedMethod("*"); // Allow all methods
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config); // Apply CORS configuration to all paths
         return new CorsFilter(source);
     }
