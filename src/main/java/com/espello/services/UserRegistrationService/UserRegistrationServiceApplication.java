@@ -21,13 +21,13 @@ public class UserRegistrationServiceApplication {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true); // Optional: only if you need credentials
-        config.addAllowedOrigin("http://192.168.1.3:3000");
-        config.addAllowedOrigin("http://192.168.1.3:3001");
+        config.addAllowedOrigin("*");
+//        config.addAllowedOrigin("http://192.168.1.3:3001");
         config.addAllowedHeader("*");
-        config.addAllowedMethod("GET");
-        config.addAllowedMethod("POST");
-        config.addAllowedMethod("PUT");
-        config.addAllowedMethod("DELETE");
+        config.addAllowedMethod("*");
+//        config.addAllowedMethod("POST");
+//        config.addAllowedMethod("PUT");
+//        config.addAllowedMethod("DELETE");
         source.registerCorsConfiguration("/**", config); // Apply CORS configuration to all paths
         return new CorsFilter(source);
     }
