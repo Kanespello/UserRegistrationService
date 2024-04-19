@@ -14,6 +14,7 @@ import com.espello.services.UserRegistrationService.Domain.AnalysisSubParam;
 import com.espello.services.UserRegistrationService.Domain.SessionAnalysis;
 import com.espello.services.UserRegistrationService.Domain.SessionDetails;
 import com.espello.services.UserRegistrationService.Domain.SessionTranscript;
+import com.espello.services.UserRegistrationService.Domain.Waitlist;
 import com.espello.services.UserRegistrationService.Domain.Projections.UserSessionProjection;
 import com.espello.services.UserRegistrationService.Dto.AnalysisParam;
 import com.espello.services.UserRegistrationService.Dto.SessionAnalysisDTO;
@@ -28,6 +29,7 @@ import com.espello.services.UserRegistrationService.Repository.SessionAnalysisRe
 import com.espello.services.UserRegistrationService.Repository.SessionDetailsRepository;
 import com.espello.services.UserRegistrationService.Repository.SessionTranscriptRepository;
 import com.espello.services.UserRegistrationService.Repository.UserSessionDetailsRepository;
+import com.espello.services.UserRegistrationService.Repository.WaitlistRepository;
 import com.espello.services.UserRegistrationService.Utility.DTOBuilder;
 
 import jakarta.transaction.Transactional;
@@ -52,6 +54,9 @@ public class SessionService {
 	
 	@Autowired
 	private AnalysisSubParamRepository analysisSubParamRepository;
+	
+	@Autowired
+	private WaitlistRepository waitlistRepository;
 	
 	@Transactional
 	public SessionCreateResponse createSession(SessionCreateRequest sessionCreateRequest){
@@ -189,6 +194,24 @@ public class SessionService {
 		}
 		
 		return sessionAnalysisDTO;		
+	}
+	
+	public Boolean joinWaitlist (String email, String phone, String name ,String message, boolean isEnterprise) {
+		
+		try {
+			Waitlist waitlist = new Waitlist();
+			waitlist.setEmail(email);
+			waitlist.setPhone(phone);
+			waitlist.setEnterprise(isEnterprise);
+			waitlist.setFullName(name);
+			waitlist.setMessage(message);
+			waitlistRepository.save(waitlist);
+		} catch (Exception e) {
+			return false;
+		}
+		
+		return true;
+		
 	}
 
 }

@@ -95,4 +95,11 @@ public class SessionVoneController {
 		return response;		
 	}
 	
+	@RequestMapping(value = "/joinWaitlist", method = RequestMethod.GET)
+	public Response<Boolean> getAnalysis(@NotNull String email, String phone, String name ,String message, boolean isEnterprise){
+		Response<Boolean> response = new Response<>();
+		response.setData(sessionService.joinWaitlist(email, phone, name, message, isEnterprise));
+		return response;		
+	}
+	
 }
