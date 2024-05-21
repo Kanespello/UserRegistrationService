@@ -205,7 +205,10 @@ public class SessionService {
 			waitlist.setEnterprise(isEnterprise);
 			waitlist.setFullName(name);
 			waitlist.setMessage(message);
-			waitlistRepository.save(waitlist);
+			
+			if(StringUtils.isNotBlank(email)) {
+				waitlistRepository.save(waitlist);
+			}
 		} catch (Exception e) {
 			return false;
 		}

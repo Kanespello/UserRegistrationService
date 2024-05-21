@@ -18,6 +18,7 @@ import com.espello.services.UserRegistrationService.Dto.Response.SessionDetailsR
 import com.espello.services.UserRegistrationService.Dto.Response.SessionTranscriptResponse;
 import com.espello.services.UserRegistrationService.Services.SessionService;
 
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 @Validated
@@ -96,7 +97,7 @@ public class SessionVoneController {
 	}
 	
 	@RequestMapping(value = "/joinWaitlist", method = RequestMethod.GET)
-	public Response<Boolean> getAnalysis(@NotNull String email, String phone, String name ,String message, boolean isEnterprise){
+	public Response<Boolean> joinWaitlist(String email, String phone, String name ,String message, boolean isEnterprise){
 		Response<Boolean> response = new Response<>();
 		response.setData(sessionService.joinWaitlist(email, phone, name, message, isEnterprise));
 		return response;		
