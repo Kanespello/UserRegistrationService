@@ -103,4 +103,11 @@ public class SessionVoneController {
 		return response;		
 	}
 	
+	@RequestMapping(value = "/submitSessionFeedback", method = RequestMethod.GET)
+	public Response<Boolean> submitSessionFeedback(Integer rating, String comments, String sessionId){
+		Response<Boolean> response = new Response<>();
+		response.setData(sessionService.submitSessionFeedback(rating, comments, sessionId));
+		return response;		
+	}
+	
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.espello.services.UserRegistrationService.Domain.AnalysisSubParam;
 import com.espello.services.UserRegistrationService.Domain.SessionAnalysis;
 import com.espello.services.UserRegistrationService.Domain.SessionDetails;
+import com.espello.services.UserRegistrationService.Domain.SessionFeedback;
 import com.espello.services.UserRegistrationService.Domain.SessionTranscript;
 import com.espello.services.UserRegistrationService.Domain.Waitlist;
 import com.espello.services.UserRegistrationService.Domain.Projections.UserSessionProjection;
@@ -27,6 +28,7 @@ import com.espello.services.UserRegistrationService.Enums.SessionStatus;
 import com.espello.services.UserRegistrationService.Repository.AnalysisSubParamRepository;
 import com.espello.services.UserRegistrationService.Repository.SessionAnalysisRepository;
 import com.espello.services.UserRegistrationService.Repository.SessionDetailsRepository;
+import com.espello.services.UserRegistrationService.Repository.SessionFeedbackRepository;
 import com.espello.services.UserRegistrationService.Repository.SessionTranscriptRepository;
 import com.espello.services.UserRegistrationService.Repository.UserSessionDetailsRepository;
 import com.espello.services.UserRegistrationService.Repository.WaitlistRepository;
@@ -57,6 +59,9 @@ public class SessionService {
 	
 	@Autowired
 	private WaitlistRepository waitlistRepository;
+	
+	@Autowired
+	private SessionFeedbackRepository sessionFeedbackRepository;
 	
 	@Transactional
 	public SessionCreateResponse createSession(SessionCreateRequest sessionCreateRequest){
@@ -209,6 +214,24 @@ public class SessionService {
 			if(StringUtils.isNotBlank(email)) {
 				waitlistRepository.save(waitlist);
 			}
+		} catch (Exception e) {
+			return false;
+		}
+		
+		return true;
+		
+	}
+	
+	public Boolean submitSessionFeedback (Integer rating, String comments, String sessionId) {
+		
+		try {
+			SessionFeedback sessionFeedback = new SessionFeedback();
+			sessionFeedback.setComments(comments);
+			sessionFeedback.setRating(rating);
+			sessionFeedback.setSessionId(sessionId);
+			
+			sessionFeedbackRepository.save(sessionFeedback);
+			
 		} catch (Exception e) {
 			return false;
 		}
