@@ -2,10 +2,11 @@ package com.espello.services.UserRegistrationService.Dto.Response;
 
 import java.time.LocalDateTime;
 
+import com.espello.services.EspelloUtils.ResponseDto.Error;
 import com.espello.services.UserRegistrationService.Dto.SessionDetailsDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class SessionDetailsResponse {
+public class SessionDetailsResponse extends Error {
 
     private String sessionId;
     

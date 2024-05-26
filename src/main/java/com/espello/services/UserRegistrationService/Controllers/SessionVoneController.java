@@ -1,5 +1,6 @@
 package com.espello.services.UserRegistrationService.Controllers;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.espello.services.EspelloUtils.Enums.ApiResponseStatus;
 import com.espello.services.EspelloUtils.ResponseDto.Response;
 import com.espello.services.UserRegistrationService.Dto.SessionAnalysisDTO;
 import com.espello.services.UserRegistrationService.Dto.Request.ConversationRequest;
@@ -46,7 +48,12 @@ public class SessionVoneController {
 	public Response<SessionDetailsResponse> getSessionDetails(@NotNull String sessionId){
 		Response<SessionDetailsResponse> response = new Response<>();
 		
-		response.setData(sessionService.getSessionDetails(sessionId));
+		SessionDetailsResponse sessionDetails = sessionService.getSessionDetails(sessionId);
+		
+		if(StringUtils.isNotBlank(sessionDetails.getErrorDescription())) {
+			response.setStatus(ApiResponseStatus.FAILED);
+			response.setData(sessionDetails);
+		}
 		
 		return response;
 	}

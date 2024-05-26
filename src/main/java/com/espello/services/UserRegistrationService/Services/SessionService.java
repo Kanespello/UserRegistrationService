@@ -97,6 +97,11 @@ public class SessionService {
 			logger.error("Error Fetching Session Details", e);
 		}
 		
+		if(sessionDetailsResponse==null) {
+			sessionDetailsResponse = new SessionDetailsResponse();
+			sessionDetailsResponse.setErrorDescription("Session not found");
+		}
+		
 		
 		return sessionDetailsResponse;
 	}
