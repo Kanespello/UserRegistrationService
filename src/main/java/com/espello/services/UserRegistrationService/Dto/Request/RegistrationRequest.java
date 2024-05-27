@@ -11,7 +11,7 @@ public class RegistrationRequest {
 	@NotNull
 	private String email;
 	@NotNull
-	private RegistrationMedium registrationMedium;
+	private RegistrationMedium registrationMedium = RegistrationMedium.GSIGNUP;
 	
 	public String getName() {
 		return name;

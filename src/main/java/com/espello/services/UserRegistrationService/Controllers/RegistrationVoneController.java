@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.espello.services.EspelloUtils.Enums.ApiResponseStatus;
 import com.espello.services.EspelloUtils.ResponseDto.Response;
 import com.espello.services.UserRegistrationService.Dto.Request.LoginRequest;
 import com.espello.services.UserRegistrationService.Dto.Request.OTPVerificationRequest;
@@ -37,6 +38,10 @@ public class RegistrationVoneController {
 		Response<RegistrationResponse> response = new Response<>();
 		
 		RegistrationResponse registrationResponse = registrationService.register(registrationRequest);
+		
+		if(registrationResponse==null || registrationResponse.getUserId()==null) {
+			response.setStatus(ApiResponseStatus.FAILED);
+		}
 		
 		response.setData(registrationResponse);
 		

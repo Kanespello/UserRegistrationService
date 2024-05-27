@@ -1,5 +1,8 @@
 package com.espello.services.UserRegistrationService.Services;
 
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import com.espello.services.EspelloUtils.Utility.ValidationUtils;
 import com.espello.services.UserRegistrationService.Configs.RegistrationConfig;
 import com.espello.services.UserRegistrationService.Domain.OTPVerification;
 import com.espello.services.UserRegistrationService.Domain.User;
+import com.espello.services.UserRegistrationService.Domain.Waitlist;
 import com.espello.services.UserRegistrationService.Dto.Request.LoginRequest;
 import com.espello.services.UserRegistrationService.Dto.Request.OTPVerificationRequest;
 import com.espello.services.UserRegistrationService.Dto.Request.RegistrationRequest;
@@ -20,6 +24,7 @@ import com.espello.services.UserRegistrationService.Enums.RegistrationMedium;
 import com.espello.services.UserRegistrationService.Enums.VerificationModule;
 import com.espello.services.UserRegistrationService.Repository.OTPVerificationRepository;
 import com.espello.services.UserRegistrationService.Repository.UserRepository;
+import com.espello.services.UserRegistrationService.Repository.WaitlistRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -39,6 +44,9 @@ public class RegistrationService {
 	
 	@Autowired
 	private OTPVerificationRepository otpVerificationRepository;
+	
+	@Autowired
+	private WaitlistRepository waitlistRepository;
 
 	@Transactional
 	public RegistrationResponse register(RegistrationRequest registrationRequest){
@@ -55,6 +63,35 @@ public class RegistrationService {
 		}
 		
 		User userResponse = userRepository.findUserByEmail(registrationRequest.getEmail());
+		
+		if(userResponse==null) {
+			User userRequest = new User();
+			userRequest.setEmail(registrationRequest.getEmail());
+			userRequest.setFullName(registrationRequest.getName());
+			userResponse = userRepository.save(userRequest);
+			registrationResponse.setUserId(userResponse.getUserId());
+		}
+		
+		
+		/*
+		 * The below is temporary code for beta testing purpose
+		 * */
+		
+		
+		List<Waitlist> waitlist =  waitlistRepository.findUserByEmail(registrationRequest.getEmail());
+		 
+		if(CollectionUtils.isEmpty(waitlist)) {
+			registrationResponse.setUserId(null);
+			registrationResponse.setErrorDescription("email not exist in waitlist");
+			return registrationResponse;
+		}
+		
+		
+		/*
+		 * Temporary code ends
+		 * */
+		
+		
 		
 		if(registrationRequest.getRegistrationMedium().equals(RegistrationMedium.GSIGNUP)) {
 			if(userResponse!=null && userResponse.getUserId()>0) {
@@ -77,15 +114,7 @@ public class RegistrationService {
 			
 		}
 		
-		User userRequest = new User();
-		
-		userRequest.setEmail(registrationRequest.getEmail());
-		
-		userRequest.setFullName(registrationRequest.getName());
-		
-		userResponse = userRepository.save(userRequest);
-		
-		registrationResponse.setUserId(userResponse.getUserId());
+
 		
 		return registrationResponse;
 	}
