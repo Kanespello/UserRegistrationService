@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.espello.services.EspelloUtils.Enums.ApiResponseStatus;
 import com.espello.services.EspelloUtils.ResponseDto.Response;
+import com.espello.services.UserRegistrationService.Dto.AssistantThreadDTO;
 import com.espello.services.UserRegistrationService.Dto.SessionAnalysisDTO;
 import com.espello.services.UserRegistrationService.Dto.Request.ConversationRequest;
 import com.espello.services.UserRegistrationService.Dto.Request.SessionCreateRequest;
@@ -20,7 +21,6 @@ import com.espello.services.UserRegistrationService.Dto.Response.SessionDetailsR
 import com.espello.services.UserRegistrationService.Dto.Response.SessionTranscriptResponse;
 import com.espello.services.UserRegistrationService.Services.SessionService;
 
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 @Validated
@@ -114,6 +114,20 @@ public class SessionVoneController {
 	public Response<Boolean> submitSessionFeedback(Integer rating, String comments, String sessionId){
 		Response<Boolean> response = new Response<>();
 		response.setData(sessionService.submitSessionFeedback(rating, comments, sessionId));
+		return response;		
+	}
+	
+	@RequestMapping(value = "/saveAssistantThread", method = RequestMethod.POST)
+	public Response<Boolean> saveAssistantThread(@Validated @RequestBody AssistantThreadDTO assistantThreadRequest){
+		Response<Boolean> response = new Response<>();
+		response.setData(sessionService.saveAssistantThread(assistantThreadRequest));
+		return response;		
+	}
+	
+	@RequestMapping(value = "/getAssistantThread", method = RequestMethod.GET)
+	public Response<AssistantThreadDTO> getAssistantThread(@NotNull String sessionId){
+		Response<AssistantThreadDTO> response = new Response<>();
+		response.setData(sessionService.getAssistantThread(sessionId));
 		return response;		
 	}
 	

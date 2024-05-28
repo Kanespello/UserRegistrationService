@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.espello.services.UserRegistrationService.Domain.AnalysisSubParam;
+import com.espello.services.UserRegistrationService.Domain.AssistantThreads;
 import com.espello.services.UserRegistrationService.Domain.SessionAnalysis;
 import com.espello.services.UserRegistrationService.Domain.SessionDetails;
 import com.espello.services.UserRegistrationService.Domain.SessionFeedback;
@@ -18,6 +19,7 @@ import com.espello.services.UserRegistrationService.Domain.SessionTranscript;
 import com.espello.services.UserRegistrationService.Domain.Waitlist;
 import com.espello.services.UserRegistrationService.Domain.Projections.UserSessionProjection;
 import com.espello.services.UserRegistrationService.Dto.AnalysisParam;
+import com.espello.services.UserRegistrationService.Dto.AssistantThreadDTO;
 import com.espello.services.UserRegistrationService.Dto.SessionAnalysisDTO;
 import com.espello.services.UserRegistrationService.Dto.Request.ConversationRequest;
 import com.espello.services.UserRegistrationService.Dto.Request.SessionCreateRequest;
@@ -26,6 +28,7 @@ import com.espello.services.UserRegistrationService.Dto.Response.SessionDetailsR
 import com.espello.services.UserRegistrationService.Dto.Response.SessionTranscriptResponse;
 import com.espello.services.UserRegistrationService.Enums.SessionStatus;
 import com.espello.services.UserRegistrationService.Repository.AnalysisSubParamRepository;
+import com.espello.services.UserRegistrationService.Repository.AssistantThreadRepository;
 import com.espello.services.UserRegistrationService.Repository.SessionAnalysisRepository;
 import com.espello.services.UserRegistrationService.Repository.SessionDetailsRepository;
 import com.espello.services.UserRegistrationService.Repository.SessionFeedbackRepository;
@@ -62,6 +65,9 @@ public class SessionService {
 	
 	@Autowired
 	private SessionFeedbackRepository sessionFeedbackRepository;
+	
+	@Autowired
+	private AssistantThreadRepository assistantThreadRepository;
 	
 	@Transactional
 	public SessionCreateResponse createSession(SessionCreateRequest sessionCreateRequest){
@@ -242,6 +248,53 @@ public class SessionService {
 		}
 		
 		return true;
+		
+	}
+	
+	@Transactional
+	public Boolean saveAssistantThread(AssistantThreadDTO assistantThreadRequest){
+		
+		try {
+			if(assistantThreadRequest!=null && StringUtils.isNoneBlank(assistantThreadRequest.getAssistantId(), assistantThreadRequest.getSessionId(), assistantThreadRequest.getThreadId())){
+				AssistantThreads assistantThreads = new AssistantThreads();
+				assistantThreads.setAssistantId(assistantThreadRequest.getAssistantId());
+				assistantThreads.setThreadId(assistantThreadRequest.getThreadId());
+				assistantThreads.setSessionId(assistantThreadRequest.getSessionId());
+				
+				assistantThreadRepository.save(assistantThreads);
+				
+				return true;
+			}
+		}
+		catch (Exception e) {
+			return false;
+		}
+		
+		return false;
+		
+	}
+	
+	public AssistantThreadDTO getAssistantThread(String sessionId){
+		
+		AssistantThreadDTO assistantThreadDTO = new AssistantThreadDTO();
+		
+		try {
+			if(StringUtils.isNotEmpty(sessionId)) {
+				AssistantThreads assistantThreads = assistantThreadRepository.findBySessionId(sessionId);
+				
+				if(assistantThreads!=null) {
+					assistantThreadDTO.setSessionId(sessionId);
+					assistantThreadDTO.setAssistantId(assistantThreads.getAssistantId());
+					assistantThreadDTO.setThreadId(assistantThreads.getThreadId());
+					return assistantThreadDTO;
+				}
+			
+			}
+		} catch (Exception e) {
+			return null;
+		}
+		
+		return null;
 		
 	}
 
