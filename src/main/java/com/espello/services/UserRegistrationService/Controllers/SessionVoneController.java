@@ -49,10 +49,9 @@ public class SessionVoneController {
 		Response<SessionDetailsResponse> response = new Response<>();
 		
 		SessionDetailsResponse sessionDetails = sessionService.getSessionDetails(sessionId);
-		
+		response.setData(sessionDetails);
 		if(StringUtils.isNotBlank(sessionDetails.getErrorDescription())) {
 			response.setStatus(ApiResponseStatus.FAILED);
-			response.setData(sessionDetails);
 		}
 		
 		return response;
