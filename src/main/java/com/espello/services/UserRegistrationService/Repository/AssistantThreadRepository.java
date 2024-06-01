@@ -6,6 +6,6 @@ import com.espello.services.UserRegistrationService.Domain.AssistantThreads;
 
 public interface AssistantThreadRepository extends JpaRepository<AssistantThreads, Integer> {
 
-	@Query(value = "SELECT * FROM AssistantThreads WHERE sessionId = :sessionId ORDER BY submit_date DESC LIMIT 1", nativeQuery = true)
+	@Query(value = "SELECT * FROM assistantThreads WHERE sessionId = :sessionId ORDER BY submit_date DESC LIMIT 1", nativeQuery = true)
 	AssistantThreads findBySessionId(String sessionId);
 }
