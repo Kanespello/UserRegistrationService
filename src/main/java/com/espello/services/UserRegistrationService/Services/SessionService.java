@@ -16,6 +16,7 @@ import com.espello.services.UserRegistrationService.Domain.AssistantThreads;
 import com.espello.services.UserRegistrationService.Domain.SessionAnalysis;
 import com.espello.services.UserRegistrationService.Domain.SessionDetails;
 import com.espello.services.UserRegistrationService.Domain.SessionFeedback;
+import com.espello.services.UserRegistrationService.Domain.SessionSummary;
 import com.espello.services.UserRegistrationService.Domain.SessionTranscript;
 import com.espello.services.UserRegistrationService.Domain.Waitlist;
 import com.espello.services.UserRegistrationService.Domain.Projections.UserSessionProjection;
@@ -33,6 +34,7 @@ import com.espello.services.UserRegistrationService.Repository.AssistantThreadRe
 import com.espello.services.UserRegistrationService.Repository.SessionAnalysisRepository;
 import com.espello.services.UserRegistrationService.Repository.SessionDetailsRepository;
 import com.espello.services.UserRegistrationService.Repository.SessionFeedbackRepository;
+import com.espello.services.UserRegistrationService.Repository.SessionSummaryRepository;
 import com.espello.services.UserRegistrationService.Repository.SessionTranscriptRepository;
 import com.espello.services.UserRegistrationService.Repository.UserSessionDetailsRepository;
 import com.espello.services.UserRegistrationService.Repository.WaitlistRepository;
@@ -69,6 +71,9 @@ public class SessionService {
 	
 	@Autowired
 	private AssistantThreadRepository assistantThreadRepository;
+	
+	@Autowired
+	private SessionSummaryRepository sessionSummaryRepository;
 	
 	@Transactional
 	public SessionCreateResponse createSession(SessionCreateRequest sessionCreateRequest){
@@ -189,8 +194,17 @@ public class SessionService {
 	
 	@Transactional
 	public Boolean saveAnalysis(SessionAnalysisDTO sessionAnalysisDTO){
+				
 		Boolean response = false;
 		try {
+			
+			SessionSummary sessionSummary = new SessionSummary();
+			
+			sessionSummary.setCaseTitle(sessionAnalysisDTO.getCaseTitle());
+			sessionSummary.setSummary(sessionAnalysisDTO.getSummary());
+			sessionSummary.setSessionId(sessionAnalysisDTO.getSessionId());
+			
+			sessionSummaryRepository.save(sessionSummary);
 			
 			for (AnalysisParam analysisParam  : sessionAnalysisDTO.getAnalysisParams()) {
 				
@@ -217,6 +231,9 @@ public class SessionService {
 		SessionAnalysisDTO sessionAnalysisDTO = null;
 		
 		try {
+			
+			SessionSummary sessionSummary = sessionSummaryRepository.findAllBySessionId(sessionId);
+			
 			List<SessionAnalysis> sessionAnalysises = sessionAnalysisRepository.findAllSessionAnalysisBySessionId(sessionId);
 			
 			if(CollectionUtils.isNotEmpty(sessionAnalysises)) {
@@ -225,7 +242,7 @@ public class SessionService {
 				
 				List<AnalysisSubParam> analysisSubParams = analysisSubParamRepository.findAllAnalysisSubParamByAnalysisParamIdIn(analysisIds);
 				
-				sessionAnalysisDTO = DTOBuilder.buildDto(sessionAnalysises, analysisSubParams);
+				sessionAnalysisDTO = DTOBuilder.buildDto(sessionAnalysises, analysisSubParams, sessionSummary);
 				
 			}
 			

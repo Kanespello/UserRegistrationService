@@ -12,6 +12,7 @@ import com.espello.services.UserRegistrationService.Configs.RegistrationConfig;
 import com.espello.services.UserRegistrationService.Domain.AnalysisSubParam;
 import com.espello.services.UserRegistrationService.Domain.SessionAnalysis;
 import com.espello.services.UserRegistrationService.Domain.SessionDetails;
+import com.espello.services.UserRegistrationService.Domain.SessionSummary;
 import com.espello.services.UserRegistrationService.Domain.SessionTranscript;
 import com.espello.services.UserRegistrationService.Domain.UserSessionDetails;
 import com.espello.services.UserRegistrationService.Dto.AnalysisDetailTuple;
@@ -121,13 +122,17 @@ public class DTOBuilder {
 		return analysisSubParams;
 	}
 	
-	public static SessionAnalysisDTO buildDto(List<SessionAnalysis> sessionAnalysises, List<AnalysisSubParam> analysisSubParams) {
+	public static SessionAnalysisDTO buildDto(List<SessionAnalysis> sessionAnalysises, List<AnalysisSubParam> analysisSubParams, SessionSummary sessionSummary) {
 		
 		if(sessionAnalysises==null || analysisSubParams==null) {
 			return null;
 		}
 		
 		SessionAnalysisDTO sessionAnalysisDTO = new SessionAnalysisDTO();
+		
+		sessionAnalysisDTO.setCaseTitle(sessionSummary.getCaseTitle());
+		sessionAnalysisDTO.setSummary(sessionSummary.getSummary());
+		
 		List<AnalysisParam> analysisParams = new ArrayList<>();
 		
 		for (SessionAnalysis sessionAnalysis : sessionAnalysises) {
