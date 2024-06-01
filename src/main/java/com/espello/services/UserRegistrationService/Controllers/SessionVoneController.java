@@ -1,5 +1,7 @@
 package com.espello.services.UserRegistrationService.Controllers;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +55,15 @@ public class SessionVoneController {
 		if(StringUtils.isNotBlank(sessionDetails.getErrorDescription())) {
 			response.setStatus(ApiResponseStatus.FAILED);
 		}
+		
+		return response;
+	}
+	
+	@RequestMapping(value = "/getAllUserSessionDetails", method = RequestMethod.GET)
+	public Response<List<SessionDetailsResponse>> getAllUserSessionDetails(@NotNull Integer userId){
+		Response<List<SessionDetailsResponse>> response = new Response<>();
+		
+		response.setData(sessionService.getAllUserSessionDetails(userId));
 		
 		return response;
 	}

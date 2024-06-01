@@ -1,5 +1,6 @@
 package com.espello.services.UserRegistrationService.Services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -127,6 +128,29 @@ public class SessionService {
 				return null;
 			}
 			sessionDetailsResponse = getSessionDetails(userSessionProjections.get(0).getSessionId());
+		} catch (Exception e) {
+			logger.error("Error Fetching Active Session Details", e);
+		}
+		
+		return sessionDetailsResponse;
+	}
+	
+	public List<SessionDetailsResponse> getAllUserSessionDetails(Integer userId){
+		
+		List<SessionDetailsResponse> sessionDetailsResponse = new ArrayList<>();
+		
+		try {
+			List<UserSessionProjection> userSessionProjections = userSessionDetailsRepository.findSessionIdsByUserId(userId);
+			
+			if(CollectionUtils.isEmpty(userSessionProjections)) {
+				return null;
+			}
+			
+			for (UserSessionProjection userSessionProjection : userSessionProjections) {
+				sessionDetailsResponse.add(getSessionDetails(userSessionProjection.getSessionId()));
+			}
+			
+			
 		} catch (Exception e) {
 			logger.error("Error Fetching Active Session Details", e);
 		}

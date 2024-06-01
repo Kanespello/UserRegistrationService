@@ -17,6 +17,8 @@ public interface UserSessionDetailsRepository extends JpaRepository<UserSessionD
 
 	List<UserSessionProjection> findSessionIdsByUserIdAndStatus(Integer userId, SessionStatus status);
 	
+	List<UserSessionProjection> findSessionIdsByUserId(Integer userId);
+	
 	@Modifying
 	@Query(value="UPDATE userSessionDetails SET status = 'history' WHERE userId = :userId", nativeQuery = true)
 	void updatePreviousSessionStatusHistory(@Param("userId") Integer userId);
