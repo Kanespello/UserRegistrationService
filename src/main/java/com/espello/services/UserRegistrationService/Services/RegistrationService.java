@@ -1,5 +1,6 @@
 package com.espello.services.UserRegistrationService.Services;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -78,14 +79,21 @@ public class RegistrationService {
 		 * */
 		
 		
-		List<Waitlist> waitlist =  waitlistRepository.findUserByEmail(registrationRequest.getEmail());
-		 
-		if(CollectionUtils.isEmpty(waitlist)) {
+		List<String> wlEmails = Arrays.asList("abhiagrawal2012@gmail.com","agarwalnavneet080@gmail.com","kuldeepumaraiya@gmail.com","vijay1997dhakad@gmail.com","01aviralsahu@gmail.com","Gptkanishk20@gmail.com");
+		
+//		List<Waitlist> waitlist =  waitlistRepository.findUserByEmail(registrationRequest.getEmail());
+//		 
+//		if(CollectionUtils.isEmpty(waitlist)) {
+//			registrationResponse.setUserId(null);
+//			registrationResponse.setErrorDescription("email not exist in waitlist");
+//			return registrationResponse;
+//		}
+		
+		if(!wlEmails.contains(registrationRequest.getEmail())) {
 			registrationResponse.setUserId(null);
-			registrationResponse.setErrorDescription("email not exist in waitlist");
+			registrationResponse.setErrorDescription("email is not whitelisted for beta");
 			return registrationResponse;
 		}
-		
 		
 		/*
 		 * Temporary code ends
