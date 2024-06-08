@@ -79,7 +79,7 @@ public class RegistrationService {
 		 * */
 		
 		
-		List<String> wlEmails = Arrays.asList("abhiagrawal2012@gmail.com","agarwalnavneet080@gmail.com","kuldeepumaraiya@gmail.com","vijay1997dhakad@gmail.com","01aviralsahu@gmail.com","Gptkanishk20@gmail.com");
+		List<String> wlEmails = Arrays.asList("abhiagrawal2012@gmail.com","agarwalnavneet080@gmail.com","kuldeepumaraiya@gmail.com","vijay1997dhakad@gmail.com","01aviralsahu@gmail.com","gptkanishk20@gmail.com");
 		
 //		List<Waitlist> waitlist =  waitlistRepository.findUserByEmail(registrationRequest.getEmail());
 //		 
