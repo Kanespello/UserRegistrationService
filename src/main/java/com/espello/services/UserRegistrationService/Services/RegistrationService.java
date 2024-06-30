@@ -81,7 +81,12 @@ public class RegistrationService {
 		
 		List<String> wlEmails = Arrays.asList("abhiagrawal2012@gmail.com","agarwalnavneet080@gmail.com","kuldeepumaraiya@gmail.com",
 				"vijay1997dhakad@gmail.com","01aviralsahu@gmail.com","gptkanishk20@gmail.com", 
-				"vatsalmishra8@gmail.com", "siddantvardey@gmail.com");
+				"vatsalmishra8@gmail.com", "siddantvardey@gmail.com", "somilkabra98@gmail.com",
+				"adityasinghnitb6045@gmail.com", "surajgup123456@gmail.com", "avatsa174@gmail.com", 
+				"hiranmoy.panda25@dmsiitd.org", "siddhiseth3009@gmail.com", "abhaysharma17091997@gmail.com",
+				"shrey.shivam25@dmsiitd.org", "lokeshsaras123@gmail.com", "anuj1prince@gmail.com",
+				"kshitusc99@gmail.com", "jainalisha350@gmail.com", "yashugauravyadu@gmail.com",
+				"balajih781@gmail.com", "chandan.manit@gmail.com", "harshadkaramchandani11@gmail.com");
 		
 //		List<Waitlist> waitlist =  waitlistRepository.findUserByEmail(registrationRequest.getEmail());
 //		 
