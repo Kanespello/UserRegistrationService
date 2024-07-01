@@ -87,7 +87,7 @@ public class RegistrationService {
 				"shrey.shivam25@dmsiitd.org", "lokeshsaras123@gmail.com", "anuj1prince@gmail.com",
 				"kshitusc99@gmail.com", "jainalisha350@gmail.com", "yashugauravyadu@gmail.com",
 				"balajih781@gmail.com", "chandan.manit@gmail.com", "harshadkaramchandani11@gmail.com", 
-				"officialrohitguru@gmail.com");
+				"officialrohitguru@gmail.com", "yashumaraiya@gmail.com");
 		
 //		List<Waitlist> waitlist =  waitlistRepository.findUserByEmail(registrationRequest.getEmail());
 //		 
